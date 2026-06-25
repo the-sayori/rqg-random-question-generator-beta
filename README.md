@@ -33,13 +33,14 @@ So here's my solution: **a random question generator!1!1!1** (still needs an AI 
    ```bash
    python user.py
    ```
+---
 
 ## 📄 License
 
 Apache 2.0 — check the LICENSE file if you're into legal stuff, otherwise just know you can use it freely but gotta keep my copyright notices)
 (using it cuz i kinda wanna buy my self some burgurs if a big tech company buys it 🤤 ✌️)
 
-
+---
 
 ## ⁉️Alpha status  issues (ig we have to talk abt the negatives now...)
 (lets js say, there are some technical difficulties... totally not cuz of mine skill issue)
