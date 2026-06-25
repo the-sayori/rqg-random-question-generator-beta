@@ -25,7 +25,7 @@ So here's my solution: **a random question generator!1!1!1** (still needs an AI 
 ## 🤔 How to run it
 
 1. Make sure you have Python 3.6+
-2. Install the only dependency:
+2. Install the only dependency: (its not in use now so tbh u could js delete import openai from openai and ai(x) function)
    ```bash
    pip install openai
    ```
