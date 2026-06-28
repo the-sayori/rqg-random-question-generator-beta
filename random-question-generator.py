@@ -20,23 +20,36 @@ def transform(inp, typ, errmsg,retry):
             inp = None
         else:
             print(errmsg)
-            raise SystemExit
+            raise SystemExit(1)
+    return(inp)
 
 
+def list_of_operation(difficulty):
+    operations = ["adding", "subtracting"]
+    if difficulty == 1:
+        operations.extend(["dividing","multiplying", "exponentiating"])
+    else:
+        pass
+    return operations
 
+def operation_determinant(difficulty,user_operation):
+    operations = list_of_operation(difficulty)
+    if user_operation in enumerate(operations):
+        user_operation = operations
+    else:
+        pass
+    return operations
 
-
-
-def elementary_school_easy_question_generator(choose_operation_elementary_easy):
-    operation_list_elementary_easy = ["adding", "subtracting"]
-    if choose_operation_elementary_easy == "1":
-        operation_list_elementary_easy = ["adding"]
-    elif choose_operation_elementary_easy == "2":
-        operation_list_elementary_easy = ["subtracting"]
+def school_1_easy_question_generator(choose_operation):
+    operations = list_of_operation(0)
+    if choose_operation == "1":
+        operations = ["adding"]
+    elif choose_operation == "2":
+        operations = ["subtracting"]
     else :
         pass
 ##easy-question-generator
-    operation = random.choice(operation_list_elementary_easy)
+    operation = random.choice(operations)
     if operation == "adding":
         num1 = random.randint(1, 10)
         num2 = random.randint(1, 10)
@@ -50,33 +63,29 @@ def elementary_school_easy_question_generator(choose_operation_elementary_easy):
     "adding": "+",
     "subtracting": "-",
     }[operation]
-    elementary_user_easy = input(f"What is {num1} {symbol} {num2}? ")
-    try:
-        elementary_user_easy = int(elementary_user_easy)
-    except ValueError:
-        print("Invalid input. Please enter a number.")
-        return
-    if elementary_user_easy == answer:
+    user_answer = input(f"What is {num1} {symbol} {num2}? ").strip()
+    user_answer = transform(user_answer, int, "invalid input, enter a number.", 0)
+    if user_answer == answer:
         print("Correct!")
     else:
         print("Incorrect.the correct answer is:", answer)
 
-def elementary_school_medium_question_generator(choose_operation_elementary_medium):
-    operation_list_elementary_medium = ["adding", "subtracting", "multiplying", "dividing", "exponentiating"]
-    if choose_operation_elementary_medium.lower() == "1":
-        operation_list_elementary_medium = ["adding"]
-    elif choose_operation_elementary_medium.lower() == "2":
-        operation_list_elementary_medium = ["subtracting"]
-    elif choose_operation_elementary_medium.lower() == "3":
-        operation_list_elementary_medium = ["multiplying"]
-    elif choose_operation_elementary_medium.lower() == "4":
-        operation_list_elementary_medium = ["dividing"]
-    elif choose_operation_elementary_medium.lower() == "5":
-        operation_list_elementary_medium = ["exponentiating"]
+def school_2_medium_question_generator(choose_operation):
+    operations = list_of_operation(1)
+    if choose_operation == "1":
+        operations = ["adding"]
+    elif choose_operation == "2":
+        operations = ["subtracting"]
+    elif choose_operation == "3":
+        operations = ["multiplying"]
+    elif choose_operation == "4":
+        operations = ["dividing"]
+    elif choose_operation == "5":
+        operations = ["exponentiating"]
     else :
         pass
 ##medium-question-generator
-    operation = random.choice(operation_list_elementary_medium)
+    operation = random.choice(operations)
     if operation == "adding":
         num1 = round(random.uniform(1, 100),2)
         num2 = round(random.uniform(1, 100),2)
@@ -112,21 +121,20 @@ def elementary_school_medium_question_generator(choose_operation_elementary_medi
     "dividing": "enter division either as a fraction a/b or as a decimal",
     "exponentiating": "",
     }[operation]
-    elementary_user_medium = input(f"What is {num1} {symbol} {num2}? {tips} ")
+    user_answer = input(f"What is {num1} {symbol} {num2}? {tips} ").strip()
     try:
-        elementary_user_medium = float(elementary_user_medium)
+        user_answer = float(user_answer)
     except ValueError:
         if operation == "dividing":
-            if check_division_answer(elementary_user_medium.strip(), num1, num2):
-                elementary_user_medium = answer
-                pass
+            if check_division_answer(user_answer.strip(), num1, num2):
+                user_answer = answer
             else:
-                elementary_user_medium=answer + 100
-                pass
+                print("Incorrect, the correct answer is:", answer)
+                return
         else:
             print("Invalid input. Please enter a number.")
             return
-    if abs(elementary_user_medium - answer) < 5e-3:
+    if abs(user_answer - answer) < 5e-3:
         print("Correct!")
     else:
         print("Incorrect, the correct answer is:", answer)
@@ -150,46 +158,38 @@ def ai(x):
 
 
 def main():
-    school_level = input(
+    difficulty_1 = input(
         "choice of difficulty (in numbers!) \n"
         "1. elementary school \n"
         "2. middle school(placeholder) \n"
         "3. high school(placeholder) \n"
-        "4. collage(placeholder) \n"
+        "4. college(placeholder) \n"
         "5. university(placeholder) \n"
-    )
+    ).strip()
+    difficulty_1 = transform(difficulty_1, int, "invalid input, please enter a number between 1 to 5.", 0)
 
-    try:
-        school_level = int(school_level)
-    except ValueError:
+    if difficulty_1 < 1 or difficulty_1 > 5:
         print("Invalid input. Please enter a number between 1 and 5.")
         raise SystemExit(1)
 
-    if school_level < 1 or school_level > 5:
-        print("Invalid input. Please enter a number between 1 and 5.")
-        raise SystemExit(1)
-
-    if school_level == 1:
-        difficulty_elementary = input(
-            "u have choose the difficulti : elementary school \n"
+    if difficulty_1 == 1:
+        difficulty = input(
+            "u have chosen the difficulty : elementary school \n"
             "choice of difficulty (in numbers!) \n"
             "1. easy \n"
             "2. medium \n"
             "3. hard(placeholder) \n"
-        )
-        try:
-            difficulty_elementary = int(difficulty_elementary)
-        except ValueError:
-            print("Invalid input. Please enter a number between 1 and 3.")
-            raise SystemExit(1)
-        if difficulty_elementary == 1 :
-            choose_operation_elementary_easy = input(
+        ).strip()
+
+        difficulty = transform(difficulty, int, "invalid input, please enter a number between 1 and 3", 0)
+        if difficulty == 1 :
+            choose_operation = input(
                 "choose the operation (CR for random operation) \n"
                 "1. adding \n"
                 "2. subtracting \n"
-            )
-            elementary_school_easy_question_generator(choose_operation_elementary_easy)
-        elif difficulty_elementary == 2 :
+            ).strip()
+            school_1_easy_question_generator(choose_operation)
+        elif difficulty == 2 :
             choose_operation_elementary_medium = input(
                 "choose the operation (CR for random operation) \n"
                 "1. adding \n"
@@ -197,8 +197,8 @@ def main():
                 "3. multiplying \n"
                 "4. dividing \n"
                 "5. exponentiating \n"
-            )
-            elementary_school_medium_question_generator(choose_operation_elementary_medium)
+            ).strip()
+            school_2_medium_question_generator(choose_operation_elementary_medium)
         else:
             print("not complete yet")
             raise SystemExit(0)
