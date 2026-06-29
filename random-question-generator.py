@@ -3,6 +3,7 @@ import random
 from fractions import Fraction
 
 def check_division_answer(user_input, correct_numerator, correct_denominator):
+    user_input = user_input.replace(" ", "")
     correct = Fraction(correct_numerator, correct_denominator)
     try:
         user_frac = Fraction(user_input)
@@ -32,22 +33,48 @@ def list_of_operation(difficulty):
         pass
     return operations
 
-def operation_determinant(difficulty,user_operation):
+def operation_determiner(difficulty,user_operation):
     operations = list_of_operation(difficulty)
-    if user_operation in enumerate(operations):
-        user_operation = operations
+    if user_operation.lower() in operations:
+        operations = [user_operation.lower()]
+        print("u have choose the operation", user_operation.lower())
     else:
-        pass
+        try:
+            user_operation = int(user_operation)
+            if 0<=user_operation-1<len(operations) :
+                operations = [operations[user_operation-1]]
+                print("u have choose the operation", operations[0])
+            else:
+                wrong_input = input("u have not choose a valid operation, y for choose again, n for random operation")
+                if wrong_input.strip().lower() == "y":
+                    return None
+                else:
+                    return list_of_operation(difficulty)
+        except ValueError:
+                if user_operation.lower() in ["", "none", "any", "random", "CR"]:
+                    print("u have choose random operation")
+                else:
+                    wrong_input = input("u have not choose a valid operation, y for choose again, n for random operation")
+                    if wrong_input.strip().lower() == "y":
+                        return None
+                    else:
+                        return list_of_operation(difficulty)
     return operations
 
-def school_1_easy_question_generator(choose_operation):
-    operations = list_of_operation(0)
-    if choose_operation == "1":
-        operations = ["adding"]
-    elif choose_operation == "2":
-        operations = ["subtracting"]
-    else :
-        pass
+def operation_asking(difficulty):
+    operations = list_of_operation(difficulty)
+    print("choose the operation \n (enter either the number or the word, press CR or type random/none/any for random operation) ")
+    for ind,op in enumerate (operations):
+        print(ind+1, op)
+    user_operation = input("").lower().strip()
+    return user_operation
+
+
+def school_1_easy_question_generator():
+    operations = None
+    while operations is None:
+        user_operations = operation_asking(0)
+        operations = operation_determiner(0, user_operations)
 ##easy-question-generator
     operation = random.choice(operations)
     if operation == "adding":
@@ -70,20 +97,13 @@ def school_1_easy_question_generator(choose_operation):
     else:
         print("Incorrect.the correct answer is:", answer)
 
-def school_2_medium_question_generator(choose_operation):
-    operations = list_of_operation(1)
-    if choose_operation == "1":
-        operations = ["adding"]
-    elif choose_operation == "2":
-        operations = ["subtracting"]
-    elif choose_operation == "3":
-        operations = ["multiplying"]
-    elif choose_operation == "4":
-        operations = ["dividing"]
-    elif choose_operation == "5":
-        operations = ["exponentiating"]
-    else :
-        pass
+
+
+def school_2_medium_question_generator():
+    operations = None
+    while operations is None:
+        user_operations = operation_asking(1)
+        operations = operation_determiner(1, user_operations)
 ##medium-question-generator
     operation = random.choice(operations)
     if operation == "adding":
@@ -183,22 +203,9 @@ def main():
 
         difficulty = transform(difficulty, int, "invalid input, please enter a number between 1 and 3", 0)
         if difficulty == 1 :
-            choose_operation = input(
-                "choose the operation (CR for random operation) \n"
-                "1. adding \n"
-                "2. subtracting \n"
-            ).strip()
-            school_1_easy_question_generator(choose_operation)
+            school_1_easy_question_generator()
         elif difficulty == 2 :
-            choose_operation_elementary_medium = input(
-                "choose the operation (CR for random operation) \n"
-                "1. adding \n"
-                "2. subtracting \n"
-                "3. multiplying \n"
-                "4. dividing \n"
-                "5. exponentiating \n"
-            ).strip()
-            school_2_medium_question_generator(choose_operation_elementary_medium)
+            school_2_medium_question_generator()
         else:
             print("not complete yet")
             raise SystemExit(0)
