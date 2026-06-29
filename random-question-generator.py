@@ -7,11 +7,13 @@ def check_division_answer(user_input, correct_numerator, correct_denominator):
     correct = Fraction(correct_numerator, correct_denominator)
     try:
         user_frac = Fraction(user_input)
-    except ValueError:
+    except (ValueError, ZeroDivisionError):
         return False 
-    except ZeroDivisionError:
-        return False
-    return user_frac == correct
+    if "/"  in user_input:
+        return user_input == str(correct)
+    else:
+        return user_frac == correct
+
 
 def transform(inp, typ, errmsg,retry):
     try:
@@ -138,7 +140,7 @@ def school_2_medium_question_generator():
     "adding": "(2 decimal places)",
     "subtracting": "(2 decimal places)",
     "multiplying": "",
-    "dividing": "enter division either as a fraction a/b or as a decimal",
+    "dividing": "enter division either as a fraction a/b (simplest form!) or as a decimal",
     "exponentiating": "",
     }[operation]
     user_answer = input(f"What is {num1} {symbol} {num2}? {tips} ").strip()
