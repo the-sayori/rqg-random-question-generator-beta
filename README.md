@@ -17,7 +17,7 @@ So here's my solution: **a random question generator!1!1!1** (still needs an AI 
 
 ## Roadmap
 - the use of opeartion determinant function to get choose of operation simplified, (Done)
-- better impliment of check division answer, (wiil be released prob before 7/2 5am utc+0)
+- better impliment of check division answer, (Done)
 - better code readability, (will be released prob before 7/3 5am utc+0)
 - setting update (first mini-overhual of repeat answering) (release time tbd)
 
