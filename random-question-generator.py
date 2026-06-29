@@ -178,40 +178,56 @@ def ai(x):
 
 
 def main():
-    difficulty_1 = input(
-        "choice of difficulty (in numbers!) \n"
-        "1. elementary school \n"
-        "2. middle school(placeholder) \n"
-        "3. high school(placeholder) \n"
-        "4. college(placeholder) \n"
-        "5. university(placeholder) \n"
-    ).strip()
-    difficulty_1 = transform(difficulty_1, int, "invalid input, please enter a number between 1 to 5.", 0)
-
-    if difficulty_1 < 1 or difficulty_1 > 5:
-        print("Invalid input. Please enter a number between 1 and 5.")
-        raise SystemExit(1)
-
-    if difficulty_1 == 1:
-        difficulty = input(
-            "u have chosen the difficulty : elementary school \n"
+    while True:
+        difficulty_1 = input(
             "choice of difficulty (in numbers!) \n"
-            "1. easy \n"
-            "2. medium \n"
-            "3. hard(placeholder) \n"
+            "1. elementary school \n"
+            "2. middle school(placeholder) \n"
+            "3. high school(placeholder) \n"
+            "4. college(placeholder) \n"
+            "5. university(placeholder) \n"
+            "q to leave"
         ).strip()
-
-        difficulty = transform(difficulty, int, "invalid input, please enter a number between 1 and 3", 0)
-        if difficulty == 1 :
-            school_1_easy_question_generator()
-        elif difficulty == 2 :
-            school_2_medium_question_generator()
+        try:
+            difficulty_1 = int(difficulty_1)
+        except ValueError:
+            if difficulty_1.lower() in ["q","quit","exit","leave"]:
+                print("cya")
+                raise SystemExit(0)
+            else :
+                print("invalid selection, please reslect ur difficulty")
+                continue
+        if difficulty_1 > 5 or difficulty_1<1:
+            print("Invalid input. Please enter a number between 1 and 5.")
+            continue
         else:
-            print("not complete yet")
-            raise SystemExit(0)
-    else:
-        print("not complete yet")
-        raise SystemExit(0)
+            while True:
+                if difficulty_1 == 1:
+                    difficulty = input(
+                        "u have chosen the difficulty : elementary school \n"
+                        "choice of difficulty (in numbers!) \n"
+                        "1. easy \n"
+                        "2. medium \n"
+                        "3. hard(placeholder) \n"
+                        "q to leave"
+                    ).strip()
+                    if difficulty.lower() in ["q","quit","exit","leave"]:
+                        break
+                    else:
+                        difficulty = transform(difficulty, int, "invalid input, please enter a number between 1 and 3", 1)
+                        if difficulty is None:
+                            print("invalid selection, please reselect ur difficulty")
+                            continue
+                        if difficulty == 1 :
+                            school_1_easy_question_generator()
+                        elif difficulty == 2 :
+                            school_2_medium_question_generator()
+                        elif difficulty > 2 and difficulty <= 5:
+                            print("not complete yet, please reselect difficulty")
+                            continue
+                else :
+                    print("not complete yet, please reselect difficulty")
+                    break
 
 
 if __name__ == "__main__":
