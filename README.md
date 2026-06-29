@@ -3,6 +3,8 @@
 (does not take pr cuz i lwk wanna inprove my coding skill)
 
 > *Hey, this is a VERY, VERY new project.*
+> no ai has been used to generate a code that i dont understand, i will use ai code only if i actually understand it
+> however ai is used for bugs detection
 
 I started this because I got like **REALLY** annoyed by the usual way of practicing new topics:
 - Every website is either **paywalled** or gives you a **PDF**😭 💔
